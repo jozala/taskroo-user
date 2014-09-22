@@ -1,4 +1,5 @@
 package com.taskroo.user.acceptance
+
 import com.taskroo.testing.RunJetty
 import groovyx.net.http.ContentType
 
@@ -10,6 +11,7 @@ class UsersServiceSpec extends AcceptanceTestBase {
         def response = client.post(
                 path: 'signup',
                 body: [firstName: 'Test', lastName: 'User', email: 'username@example.com', username: TEST_USER_ID, password: 'secretPass'],
+                headers: ['X-InvitationCode': 'youCanFindLotsOfInterestingStaffInTests'],
                 requestContentType: ContentType.JSON)
         then: "response is 201 with user object"
         response.status == 201
@@ -23,6 +25,7 @@ class UsersServiceSpec extends AcceptanceTestBase {
         def response = client.post(
                 path: 'signup',
                 body: [firstName: 'Test', lastName: 'User', email: 'invalidEmailAddress', username: TEST_USER_ID, password: 'secretPass'],
+                headers: ['X-InvitationCode': 'youCanFindLotsOfInterestingStaffInTests'],
                 requestContentType: ContentType.JSON)
         then: "response is 400"
         response.status == 400
@@ -33,13 +36,25 @@ class UsersServiceSpec extends AcceptanceTestBase {
         client.post(
                 path: 'signup',
                 body: [firstName: 'Test', lastName: 'User', email: 'username@example.com', username: TEST_USER_ID, password: 'secretPass'],
+                headers: ['X-InvitationCode': 'youCanFindLotsOfInterestingStaffInTests'],
                 requestContentType: ContentType.JSON)
         when: 'sending create new user account with the same username: "userName"'
         def response = client.post(
                 path: 'signup',
                 body: [firstName: 'Test2', lastName: 'User2', email: 'username2@example.com', username: TEST_USER_ID, password: 'secretPass2'],
+                headers: ['X-InvitationCode': 'youCanFindLotsOfInterestingStaffInTests'],
                 requestContentType: ContentType.JSON)
         then: "response is 400 with user object"
         response.status == 400
+    }
+
+    def "should return unauthorized (401) when X-InvitationCode with proper value is not given"() {
+        when: 'sending create new user account'
+        def response = client.post(
+                path: 'signup',
+                body: [firstName: 'Test', lastName: 'User', email: 'username@example.com', username: TEST_USER_ID, password: 'secretPass'],
+                requestContentType: ContentType.JSON)
+        then: "response is 201 with user object"
+        response.status == 401
     }
 }
