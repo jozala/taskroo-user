@@ -28,7 +28,7 @@ public class User {
     public static User createNewUser(@JsonProperty("username") String username, @JsonProperty("email") String email,
                                      @JsonProperty("firstName") String firstName, @JsonProperty("lastName") String lastName,
                                      @JsonProperty("password") String password) {
-        return new User(username, email, firstName, lastName, password, Collections.singleton(Role.USER), false, null);
+        return new User(username, email, firstName, lastName, password, Collections.singleton(Role.USER), true, null);
     }
 
     public User(String username, String email, String firstName, String lastName, String password, Set<Role> roles,
