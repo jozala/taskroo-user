@@ -50,7 +50,7 @@ public class UsersService {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
         User userWithHashedPassword = safeUserFactory.createUserWithHashedPassword(user);
-        User createdUser = usersDao.createUser(userWithHashedPassword);
-        return Response.created(URI.create("/"+ user.get_id())).entity(createdUser).build();
+        usersDao.createUser(userWithHashedPassword);
+        return Response.created(URI.create("/"+ user.get_id())).build();
     }
 }

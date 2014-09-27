@@ -13,9 +13,8 @@ class UsersServiceSpec extends AcceptanceTestBase {
                 body: [firstName: 'Test', lastName: 'User', email: 'username@example.com', username: TEST_USER_ID, password: 'secretPass'],
                 headers: ['X-InvitationCode': 'youCanFindLotsOfInterestingStaffInTests'],
                 requestContentType: ContentType.JSON)
-        then: "response is 201 with user object"
+        then: "response is 201"
         response.status == 201
-        response.data.email == 'username@example.com'
         and: "new user gets created in the DB"
         usersCollection.count("{_id: '$TEST_USER_ID'}") == 1
     }
@@ -54,7 +53,7 @@ class UsersServiceSpec extends AcceptanceTestBase {
                 path: 'signup',
                 body: [firstName: 'Test', lastName: 'User', email: 'username@example.com', username: TEST_USER_ID, password: 'secretPass'],
                 requestContentType: ContentType.JSON)
-        then: "response is 201 with user object"
+        then: "response is 401 with user object"
         response.status == 401
     }
 }
