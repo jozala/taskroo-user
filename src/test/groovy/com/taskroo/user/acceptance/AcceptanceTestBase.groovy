@@ -9,7 +9,7 @@ import spock.lang.Specification
 abstract class AcceptanceTestBase extends Specification {
 
     static RESTClient client = new RESTClient('http://localhost:8080/')
-    private static final DB db = new MongoConnector('mongodb://localhost').getDatabase('taskroo')
+    private static final DB db = new MongoConnector('localhost', '27017').getDatabase('taskroo')
     private static final Jongo jongo = new Jongo(db);
 
     protected static final MongoCollection usersCollection = jongo.getCollection('users')

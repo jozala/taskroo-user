@@ -17,7 +17,7 @@ import static com.insightfullogic.lambdabehave.Suite.describe;
 @RunWith(JunitSuiteRunner.class)
 public class UserDaoIntegrationTest {{
 
-    DB db = new MongoConnector("mongodb://localhost").getDatabase("taskroo-dao-tests-db");
+    DB db = new MongoConnector("localhost", "27017").getDatabase("taskroo-dao-tests-db");
     Jongo jongo = new Jongo(db);
     MongoCollection usersCollection = jongo.getCollection("users");
 
