@@ -10,6 +10,7 @@ public class UserServiceApp extends ResourceConfig {
     public UserServiceApp() {
         register(ExceptionListener.class);
         property(ServerProperties.BV_SEND_ERROR_IN_RESPONSE, true);
+        register(CORSResponseFilter.class);
         packages("com.taskroo.user.service", "com.wordnik.swagger.jersey.listing");
     }
 }
