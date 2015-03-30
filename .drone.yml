@@ -7,8 +7,9 @@ env:
   - DOCKER_EMAIL=$$emailMariusz
 script:
   - set -e
+  - mkdir ~/.taskroo
   - wrapdocker &
-  - sleep 5
+  - cp src/main/resources/local.properties ~/.taskroo/.
   - mvn -Pdeploy -DargLine="-DMONGO_PORT_27017_TCP_PORT=$MONGO_PORT_27017_TCP_PORT -DMONGO_PORT_27017_TCP_ADDR=$MONGO_PORT_27017_TCP_ADDR"
   - docker login -u $DOCKER_LOGIN -p $DOCKER_PASSWORD -e $DOCKER_EMAIL
   - docker push taskroo/taskroo-user
@@ -19,4 +20,3 @@ notify:
   email:
     recipients:
       - {{emailMariusz}}
-
