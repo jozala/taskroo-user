@@ -11,6 +11,7 @@ test:
     - mvn integration-test
 deployment:
   dockerhub:
+    branch: master
     commands:
       - mvn -Pdeploy
       - docker login -u $DOCKER_LOGIN -p $DOCKER_PASSWORD -e $DOCKER_EMAIL
