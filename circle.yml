@@ -11,8 +11,8 @@ test:
     - mvn integration-test
 deployment:
   dockerhub:
-    - docker login -u $DOCKER_LOGIN -p $DOCKER_PASSWORD -e $DOCKER_EMAIL
-    - docker push taskroo/taskroo-user
-  pre:
-    - mvn -Pdeploy
+    commands:
+      - mvn -Pdeploy
+      - docker login -u $DOCKER_LOGIN -p $DOCKER_PASSWORD -e $DOCKER_EMAIL
+      - docker push taskroo/taskroo-user
 
