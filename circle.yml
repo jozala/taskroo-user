@@ -10,10 +10,9 @@ test:
     - docker run -d -p 27017:27017 docker run --name taskroo-mongo -d mongo:2.6; sleep 10
     - mvn integration-test
 deployment:
-  pre:
-    - mvn -Pdeploy
   dockerhub:
     - docker login -u $DOCKER_LOGIN -p $DOCKER_PASSWORD -e $DOCKER_EMAIL
     - docker push taskroo/taskroo-user
-
+  pre:
+    - mvn -Pdeploy
 
