@@ -8,15 +8,15 @@ machine:
     MONGO_PORT_27017_TCP_ADDR: localhost
 test:
   override:
-    - docker run -d -p 27018:27017 --name mongo -d mongo:2.6; sleep 10
+    - docker run -d -p $MONGO_PORT_27017_TCP_PORT:27017 --name mongo -d mongo:2.6; sleep 10
     - mkdir ~/.taskroo
     - cp src/main/resources/local.properties ~/.taskroo/.
-    - mvn integration-test -DargLine="-DMONGO_PORT_27017_TCP_PORT=$MONGO_PORT_27017_TCP_PORT -DMONGO_PORT_27017_TCP_ADDR=$MONGO_PORT_27017_TCP_ADDR"
+    - mvn integration-test 
 deployment:
   dockerhub:
     branch: master
     commands:
-      - mvn -Pdeploy -DargLine="-DMONGO_PORT_27017_TCP_PORT=$MONGO_PORT_27017_TCP_PORT -DMONGO_PORT_27017_TCP_ADDR=$MONGO_PORT_27017_TCP_ADDR"
-      - docker login -u $DOCKER_LOGIN -p $DOCKER_PASSWORD -e $DOCKER_EMAIL
+      - mvn -Pdeploy
+      - docker login -u $DOCKER_HUB_LOGIN -p $DOCKER_HUB_PASSWORD -e $DOCKER_EMAIL
       - docker push taskroo/taskroo-user
 
