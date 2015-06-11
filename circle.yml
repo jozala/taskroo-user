@@ -3,8 +3,6 @@ machine:
     version: oraclejdk8
   services:
     - docker
-  post:
-    - docker run 
 test:
   override:
     - docker run -d -p 27017:27017 docker run --name taskroo-mongo -d mongo:2.6; sleep 10
