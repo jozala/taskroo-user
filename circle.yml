@@ -3,15 +3,12 @@ machine:
     version: oraclejdk8
   services:
     - docker
-  post:
-    - docker run -d -p 27017 --name mongo -d mongo:2.6; sleep 10; env
-    - echo $MONGO_PORT_27017_TCP_ADDR
-    - env
 test:
   override:
+    - docker run -d -p 27018:27017 --name mongo -d mongo:2.6; sleep 10
     - mkdir ~/.taskroo
     - cp src/main/resources/local.properties ~/.taskroo/.
-    - mvn integration-test
+    - mvn integration-test -DargLine="-DMONGO_PORT_27017_TCP_PORT=27018 -DMONGO_PORT_27017_TCP_ADDR=localhost"
 deployment:
   dockerhub:
     branch: master
